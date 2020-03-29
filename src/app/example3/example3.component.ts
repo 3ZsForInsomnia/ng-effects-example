@@ -1,3 +1,4 @@
+import { CounterEffects } from './button.service';
 import { increment } from './../ngrx.stuff';
 import {
   Component,
@@ -20,26 +21,15 @@ import { Store, select } from '@ngrx/store';
       </app-button>
     </div>
   `,
-  providers: [Effects],
+  providers: [Effects, CounterEffects],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Example3Component {
   count: number = 0;
   disabled = false;
   click = new HostEmitter<MouseEvent>();
-  clickered = new EventEmitter();
 
   constructor(private store: Store<{ count: number }>, connect: Connect) {
     connect(this);
-  }
-
-  @Effect()
-  clickit(state: State<Example3Component>) {
-    return state.click.subscribe(() => this.store.dispatch(increment()));
-  }
-
-  @Effect('count')
-  setCount() {
-    return this.store.pipe(select('count'));
   }
 }

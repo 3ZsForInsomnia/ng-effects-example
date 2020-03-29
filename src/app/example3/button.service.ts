@@ -1,3 +1,6 @@
+import { increment } from './../ngrx.stuff';
+import { Example3Component } from './example3.component';
+import { Store, select } from '@ngrx/store';
 import { filter, withLatestFrom } from 'rxjs/operators';
 import { HostEmitter, State, Effect } from 'ng-effects';
 import { ElementRef, Renderer2, Injectable } from '@angular/core';
@@ -28,5 +31,20 @@ export class Button {
       ),
       filter(Boolean)
     );
+  }
+}
+
+@Injectable()
+export class CounterEffects {
+  constructor(private store: Store<any>) {}
+
+  @Effect()
+  clickit(state: State<Example3Component>) {
+    return state.click.subscribe(() => this.store.dispatch(increment()));
+  }
+
+  @Effect('count')
+  setCount() {
+    return this.store.pipe(select('count'));
   }
 }
