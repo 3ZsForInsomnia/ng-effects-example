@@ -21,6 +21,9 @@ import { Component } from '@angular/core';
         <a [routerLink]="['/example3']" class="Link" routerLinkActive="Active"
           >Example 3</a
         >
+        <a [routerLink]="['/example4']" class="Link" routerLinkActive="Active"
+          >Example 4</a
+        >
       </div>
       <router-outlet></router-outlet>
     </div>

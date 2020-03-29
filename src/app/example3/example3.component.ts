@@ -1,12 +1,6 @@
 import { CounterEffects } from './button.service';
-import { increment } from './../ngrx.stuff';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  EventEmitter,
-} from '@angular/core';
-import { Effect, Connect, Effects, State, HostEmitter } from 'ng-effects';
-import { Store, select } from '@ngrx/store';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Connect, Effects, HostEmitter } from 'ng-effects';
 
 @Component({
   selector: 'app-example3',
@@ -29,7 +23,7 @@ export class Example3Component {
   disabled = false;
   click = new HostEmitter<MouseEvent>();
 
-  constructor(private store: Store<{ count: number }>, connect: Connect) {
+  constructor(connect: Connect) {
     connect(this);
   }
 }

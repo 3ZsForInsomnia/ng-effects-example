@@ -21,7 +21,6 @@ export class Example1Service {
     return this.data$;
   }
 
-  // whenRendered: false lets it update after init, so it doesn't change while rendering
   @Effect('secondCounter')
   increment() {
     this.data1$.next(this.data1$.value + 1);
