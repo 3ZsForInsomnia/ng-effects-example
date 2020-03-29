@@ -1,7 +1,10 @@
-import { Button } from './button.service';
 import { increment } from './../ngrx.stuff';
-import { Component } from '@angular/core';
-import { Effect, Connect, Effects, HostEmitter } from 'ng-effects';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  EventEmitter,
+} from '@angular/core';
+import { Effect, Connect, Effects, State, HostEmitter } from 'ng-effects';
 import { Store, select } from '@ngrx/store';
 
 @Component({
@@ -9,25 +12,30 @@ import { Store, select } from '@ngrx/store';
   template: `
     <div>
       <p>{{ count }}</p>
-      <button ngfx-button [disabled]="false" (pressed)="buttonPressed()">
-        click to increment count!
-      </button>
+      <app-button
+        [text]="'click to increment count!'"
+        [disabled]="false"
+        (pressed)="click($event)"
+      >
+      </app-button>
     </div>
   `,
-  providers: [Effects, Button],
+  providers: [Effects],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Example3Component {
   count: number = 0;
   disabled = false;
-  pressed = new HostEmitter<MouseEvent>();
+  click = new HostEmitter<MouseEvent>();
+  clickered = new EventEmitter();
 
   constructor(private store: Store<{ count: number }>, connect: Connect) {
     connect(this);
   }
 
-  increment() {
-    console.log('dub tee eff');
-    this.store.dispatch(increment());
+  @Effect()
+  clickit(state: State<Example3Component>) {
+    return state.click.subscribe(() => this.store.dispatch(increment()));
   }
 
   @Effect('count')

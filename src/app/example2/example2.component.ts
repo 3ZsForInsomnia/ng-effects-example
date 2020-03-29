@@ -2,8 +2,7 @@ import { increment } from './../ngrx.stuff';
 import { Component } from '@angular/core';
 import { Effect, Connect, Effects, changes, State } from 'ng-effects';
 import { Store, select } from '@ngrx/store';
-import { debounce, take } from 'rxjs/operators';
-import { interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-example2',
@@ -35,7 +34,6 @@ export class Example2Component {
 
   @Effect('count')
   setCount(state: State<Example2Component>) {
-    console.log('hi there');
     // so much nicer than ngOnChanges, it's an observable
     changes(state)
       .pipe(take(1))

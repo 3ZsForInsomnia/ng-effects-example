@@ -1,23 +1,15 @@
-import { Button, ButtonLike } from './button.service';
+import { HostEmitter } from 'ng-effects';
 import { Component, Input, Output } from '@angular/core';
-import { HostEmitter, Connect, Effects, Effect, State } from 'ng-effects';
 
 @Component({
-  selector: 'button[ngfx-button]',
-  providers: [Effects, Button],
+  selector: 'app-button',
+  template: `<button (click)="pressed.emit()" [disabled]="disabled">
+    {{ text }}
+  </button>`,
 })
-export class ButtonComponent implements ButtonLike {
+export class ButtonComponent {
   @Input() disabled = false;
+  @Input() text = '';
 
-  @Output() pressed = new HostEmitter<MouseEvent>(true);
-
-  constructor(connect: Connect) {
-    console.log('instantiate the button');
-    connect(this);
-  }
-
-  @Effect('pressed')
-  emitPressed(state: State<ButtonComponent>) {
-    return state.pressed;
-  }
+  @Output() pressed = new HostEmitter<any>();
 }
