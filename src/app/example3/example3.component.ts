@@ -5,11 +5,11 @@ import { Effect, Connect, Effects, HostEmitter } from 'ng-effects';
 import { Store, select } from '@ngrx/store';
 
 @Component({
-  selector: 'app-example2',
+  selector: 'app-example3',
   template: `
     <div>
       <p>{{ count }}</p>
-      <button ngfx-button [disabled]="false" (pressed)="increment($event)">
+      <button ngfx-button [disabled]="false" (pressed)="buttonPressed()">
         click to increment count!
       </button>
     </div>
@@ -26,7 +26,7 @@ export class Example3Component {
   }
 
   increment() {
-    console.log('wtf');
+    console.log('dub tee eff');
     this.store.dispatch(increment());
   }
 
