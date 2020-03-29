@@ -1,10 +1,6 @@
-import {
-  Example1Service,
-  CoolCounter,
-  ActualService,
-} from './example1.service';
+import { Example1Service, CoolCounter } from './example1.service';
 import { Component } from '@angular/core';
-import { Connect, Effects, Effect, State } from 'ng-effects';
+import { Connect, Effects } from 'ng-effects';
 
 @Component({
   selector: 'app-example1',
@@ -34,11 +30,7 @@ export class Example1Component {
   thirdCounter = 0;
   coolCounter = 0;
 
-  constructor(
-    connect: Connect,
-    private service: Example1Service,
-    private actual: ActualService
-  ) {
+  constructor(connect: Connect, private service: Example1Service) {
     connect(this);
   }
 
@@ -46,23 +38,7 @@ export class Example1Component {
     this.service.increment();
   }
 
-  @Effect('thirdCounter')
-  init() {
-    if (this.actual.value) {
-      this.thirdCounter = this.actual.value;
-    } else return this.service.data2$;
-    // changes(state).subscribe((newState) => {
-    //   console.log('newState :', newState);
-    //   this.coolCounter = 5;
-    // });
-  }
-
   increment2() {
-    this.service.data2$.next(this.service.data2$.value + 1);
-  }
-
-  @Effect('thirdCounter')
-  updateOnChange(state: State<Example1Component>) {
-    state.thirdCounter.subscribe((abc) => (this.actual.value = abc));
+    this.service.increment2();
   }
 }
